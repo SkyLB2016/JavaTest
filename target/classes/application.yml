@@ -1,0 +1,63 @@
+#在.yml中，server只能出现一次，但在 .properties 中可以出现多次
+server:
+  address:
+  port: 8888 #更改端口，8080是默认的。
+#  tomcat:
+#    uri-encoding: utf-8
+
+self:
+  custom:
+    config:
+      sdkSecrect: abc123
+      host: https://www.baidu.com
+      port: ${server.port}
+
+spring:
+#  main:
+#    allow-circular-references: true # 允许循环引用
+  datasource: #数据源相关的位置节点
+    type:  com.zaxxer.hikari.HikariDataSource #springboot默认指定的数据源类型
+#    type:  com.alibaba.druid.pool.DruidDataSource #使用druid作为数据源类型
+#    driver-class-name: com.mysql.jdbc.Driver #mysql/mariaDB 的驱动
+    driver-class-name: com.mysql.cj.jdbc.Driver #mysql/mariaDB 的驱动
+    url: jdbc:MySQL://localhost:3306/sky?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+    username: root  #数据库的名字
+    password: 1qaz2wsx  #密码
+    hikari:                             # hikariDataSource 配置
+      connection-timeout: 30000         # 等待连接池分配链接的最大时长（毫秒），超过这个时长还没可用的链接则发生 SQLException，默认：30秒
+      minimum-idle: 5                   # 最小连接数
+      maximum-pool-size: 20             # 最大连接数
+      auto-commit: true                 # 自动提交
+      idle-timeout: 600000              # 链接超时的最大时长（毫秒），超时则被释放（retired），默认：10分钟
+      pool-name: DateSourceHikariCP     # 连接池的名字
+      max-lifetime: 1800000             # 链接的生命时长（毫秒），超时而且没被使用则被释放（retired），默认：30分钟，1800000ms
+      connection-test-query: Select 1   # 测试脚本
+  servlet:
+    multipart:
+      max-file-size: 10000KB #文件上传大小限制，最大值
+      max-request-size: 20MB #文件最大请求限制，用于批量
+
+  #  mvc:
+  #    static-path-pattern: /custompath/** # 修改静态文件static默认引用的路径，默认是不加 static 的。
+  banner:
+    loca2tion: classpath:banner/banner.txt
+#    image:
+#      location: classpath:banner/banner.png
+#      pixelmode: text
+#      pixelmode: block
+
+#MyBatis 的相关配置
+mybatis:
+  type-aliases-package: com.sky.bean #所有数据库表逆向后，所一一映射的实体类 (Entity/Bean/Pojo)
+  mapper-locations: classpath:mapper/*.xml
+
+#通用mapper配置
+mapper:
+  mappers: com.sky.mappers.MyMapper # 自定义的mappers类，所有mapper 都需要实现的接口
+  not-empty: false # 在进行数据库操作的时候，判断一个属性是否为空的时候，是否需要自动追加不为空字符串的判断
+                   # userName !=null 后面 不需要判断 userName != ''
+  identity: MYSQL
+#分页插件的配置
+pagehelper:
+  helper-dialect: mysql
+  support-methods-arguments: true

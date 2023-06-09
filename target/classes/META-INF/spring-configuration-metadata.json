@@ -1,0 +1,47 @@
+{
+  "groups": [
+    {
+      "name": "user",
+      "type": "com.sky.bean.Person",
+      "sourceType": "com.sky.bean.Person"
+    },
+    {
+      "name": "user1",
+      "type": "com.sky.bean.MyConfig",
+      "sourceType": "com.sky.bean.MyConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "user.age",
+      "type": "java.lang.Integer",
+      "sourceType": "com.sky.bean.Person"
+    },
+    {
+      "name": "user.gender",
+      "type": "java.lang.String",
+      "sourceType": "com.sky.bean.Person"
+    },
+    {
+      "name": "user.name",
+      "type": "java.lang.String",
+      "sourceType": "com.sky.bean.Person"
+    },
+    {
+      "name": "user1.age",
+      "type": "java.lang.Integer",
+      "sourceType": "com.sky.bean.MyConfig"
+    },
+    {
+      "name": "user1.gender",
+      "type": "java.lang.String",
+      "sourceType": "com.sky.bean.MyConfig"
+    },
+    {
+      "name": "user1.name",
+      "type": "java.lang.String",
+      "sourceType": "com.sky.bean.MyConfig"
+    }
+  ],
+  "hints": []
+}
