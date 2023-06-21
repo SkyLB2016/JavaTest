@@ -9,7 +9,7 @@
         WHERE age = #{age}
     </select>
 
-    <select id="getStudentByCustom" parameterType="string" resultType="com.sky.bean.Student">
+    <select id="getStudentByScore" parameterType="string" resultType="com.sky.bean.Student">
         SELECT id,
                `name`,
                age,

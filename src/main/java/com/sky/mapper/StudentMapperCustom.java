@@ -10,5 +10,5 @@ public interface StudentMapperCustom {
 
     List<Student> getStudentByAge(Integer age);
 
-    List<Student> getStudentByCustom(String score);
+    List<Student> getStudentByScore(String score);
 }

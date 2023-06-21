@@ -107,7 +107,7 @@ public class StudentController {
         return JSONResult.ok(list);
     }
 
-    @GetMapping("/getStudentByCustom")
+    @GetMapping("/getStudentByScore")
     public JSONResult getStudentByCustom(String score) {
         List<Student> list = studentService.getStudentByCustom(score, 1, 5);
         return JSONResult.ok(list);

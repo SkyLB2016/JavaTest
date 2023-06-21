@@ -73,7 +73,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> getStudentByCustom(String score, Integer page, Integer pageSize) {
         PageHelper.startPage(page, pageSize);
-        return studentMapperCustom.getStudentByCustom(score);
+        return studentMapperCustom.getStudentByScore(score);
     }
 
     @Override
