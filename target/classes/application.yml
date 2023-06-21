@@ -52,6 +52,8 @@ spring:
 mybatis:
   type-aliases-package: com.sky.bean #所有数据库表逆向后，所一一映射的实体类 (Entity/Bean/Pojo)
   mapper-locations: classpath:mapper/*.xml #对应的 mapper 映射的xml文件。
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启 mybatis 的日志，可以在控制台打印出使用的 SQL 语句
 
 #通用 mapper 配置，映射配置
 mapper:
@@ -60,8 +62,8 @@ mapper:
                    # userName !=null 后面 不需要判断 userName != ''
   identity: MYSQL
 #分页插件的配置
-#pagehelper:
+pagehelper:
 #page-helper:
-page helper:
+#page helper:
   helper-dialect: mysql
   support-methods-arguments: true
