@@ -33,12 +33,12 @@
 <!--            <optional>true</optional>-->
 <!--        </dependency>-->
 
-        <!--        spring boot 配置处理器，properties 的关联配置器-->
+        <!--spring boot 配置处理器，properties 的关联配置器-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
-        <!--        官方推荐的模版 thymeleaf 是一个XML/XHTML/HTML5模板引擎，可用于Web与非Web环境中的应用开发-->
+        <!--官方推荐的模版 thymeleaf 是一个XML/XHTML/HTML5模板引擎，可用于Web与非Web环境中的应用开发-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -59,7 +59,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.16</version>
+            <version>8.0.32</version>
         </dependency>
 
         <!-- 整合MyBatis -->

@@ -17,6 +17,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(userInfoInterceptor())
-                .addPathPatterns("/submit");
+                .addPathPatterns("/submit");//注册需要拦截的方法
     }
 }

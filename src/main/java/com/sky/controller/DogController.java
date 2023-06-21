@@ -1,6 +1,6 @@
 package com.sky.controller;
 
-import com.sky.bean.Dog;
+import com.sky.entity.DogEntity;
 import com.sky.utils.JSONResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ public class DogController {
 //    http://localhost:8888/dog/get/234?id=99&id2=887&name2=name2&name=大黄
     @GetMapping("get/{dogId}")
     public Object getDog(@PathVariable("dogId") String dogId,
-                         //参数名和value一样，requestParam 可以省略
+                         //参数名和value一样，@RequestParam 可以省略
                          @RequestParam int id,
                          int id2,
                          @RequestParam String name,
@@ -44,7 +44,7 @@ public class DogController {
         String headerToken = request.getHeader("token");
         log.info("headerToken==" + headerToken);
 
-        return JSONResult.ok(new Dog("大黄", "雄"));
+        return JSONResult.ok(new DogEntity("大黄", 1));
     }
 
     @PutMapping("update")

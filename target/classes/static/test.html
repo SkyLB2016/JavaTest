@@ -10,11 +10,12 @@
     <img src="banner01.png"/>
 <!--    <img src="banner/banner02.png">-->
 </div>
-<form action="/submit" method="post" enctype="multipart/form-data">
+<!--action 对应的是上传的接口名-->
+<form action="/uploadFile" method="post" enctype="multipart/form-data">
     <div>
         <input type="file"
                id="file"
-               name="file"
+               name="fileName"
                value="选择图片"
                accept="image/jpeg,image/jpg,image/png"/>
     </div>

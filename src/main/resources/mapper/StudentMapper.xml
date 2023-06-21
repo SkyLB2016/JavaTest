@@ -5,9 +5,16 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="userId" property="userid" jdbcType="VARCHAR" />
+    <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="gender" property="gender" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="score" property="score" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="class_room" property="classRoom" jdbcType="INTEGER" />
+    <result column="skill" property="skill" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="english_name" property="englishName" jdbcType="VARCHAR" />
   </resultMap>
 </mapper>

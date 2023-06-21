@@ -19,7 +19,8 @@ spring:
     type:  com.zaxxer.hikari.HikariDataSource #springboot默认指定的数据源类型
 #    type:  com.alibaba.druid.pool.DruidDataSource #使用druid作为数据源类型
 #    driver-class-name: com.mysql.jdbc.Driver #mysql/mariaDB 的驱动
-    driver-class-name: com.mysql.cj.jdbc.Driver #mysql/mariaDB 的驱动
+    driver-class-name: com.mysql.cj.jdbc.Driver #mysql/mariaDB 的驱动，现在加入了 cj
+    #端口号：3306，在云端的话，会被恶意扫描，所以需要更改，本地可以不用在意。
     url: jdbc:MySQL://localhost:3306/sky?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
     username: root  #数据库的名字
     password: 1qaz2wsx  #密码
@@ -36,28 +37,31 @@ spring:
     multipart:
       max-file-size: 10000KB #文件上传大小限制，最大值
       max-request-size: 20MB #文件最大请求限制，用于批量
+#  mvc:
+#    static-path-pattern: /custompath/** # 修改静态文件static默认引用的路径，默认是不加 static 的。
 
-  #  mvc:
-  #    static-path-pattern: /custompath/** # 修改静态文件static默认引用的路径，默认是不加 static 的。
+  #更换启动的logo
   banner:
-    loca2tion: classpath:banner/banner.txt
-#    image:
-#      location: classpath:banner/banner.png
+#    location: classpath:banner/banner.txt
+    image:
+      location: classpath:banner/banner06.png
 #      pixelmode: text
 #      pixelmode: block
 
 #MyBatis 的相关配置
 mybatis:
   type-aliases-package: com.sky.bean #所有数据库表逆向后，所一一映射的实体类 (Entity/Bean/Pojo)
-  mapper-locations: classpath:mapper/*.xml
+  mapper-locations: classpath:mapper/*.xml #对应的 mapper 映射的xml文件。
 
-#通用mapper配置
+#通用 mapper 配置，映射配置
 mapper:
   mappers: com.sky.mappers.MyMapper # 自定义的mappers类，所有mapper 都需要实现的接口
   not-empty: false # 在进行数据库操作的时候，判断一个属性是否为空的时候，是否需要自动追加不为空字符串的判断
                    # userName !=null 后面 不需要判断 userName != ''
   identity: MYSQL
 #分页插件的配置
-pagehelper:
+#pagehelper:
+#page-helper:
+page helper:
   helper-dialect: mysql
   support-methods-arguments: true

@@ -34,13 +34,17 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<Student> queryByCondition(String name, Integer age) {
-        Example example = new Example(Student.class);
-        Example.Criteria criteria = example.createCriteria();
-        if (!name.isEmpty())
-            criteria.andEqualTo("name", name);
-        if (age != null)
-            criteria.andEqualTo("age", age);
-        return studentMapper.selectByExample(example);
+//        Example example = new Example(Student.class);
+//        Example.Criteria criteria = example.createCriteria();
+//        if (!name.isEmpty())
+//            criteria.andEqualTo("name", name);
+//        if (age != null)
+//            criteria.andEqualTo("age", age);
+//        return studentMapper.selectByExample(example);
+        Student student = new Student();
+        student.setName(name);
+        student.setAge(age);
+        return studentMapper.select(student);
     }
 
     @Override
@@ -78,32 +82,46 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void updateStudent(Student stu) {
-        //自定义更新条件
-        Example example = new Example(Student.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("userid", stu.getUserid());
-//        criteria.andEqualTo("age", stu.getAge());
-//        studentMapper.updateByExample(stu, example);//更新全部，为null，也会覆盖更新
-//        studentMapper.updateByExampleSelective(stu, example);//有选择的更新，即为null的数据不更新
-
-
+    public void updateStudentByKey(Student stu) {
         //跟据主键来更新数据
 //        studentMapper.updateByPrimaryKey(stu);//更新全部，为null，也会覆盖更新
         studentMapper.updateByPrimaryKeySelective(stu);//有选择的更新，即为null的数据不更新
     }
 
     @Override
-    public void deleteByStudent(Student stu) {
-        //自定义删除条件
-//        Example example = new Example(Student.class);
-//        Example.Criteria criteria = example.createCriteria();
-////        criteria.andEqualTo("age", stu.getAge());
-//        criteria.andCondition("age>20");
-//        studentMapper.deleteByExample(example);//自定义删除条件
+    public void updateStudent(Student stu) {
+        //自定义更新条件
+        Example example = new Example(Student.class);
+        Example.Criteria criteria = example.createCriteria();
+//        criteria.andEqualTo("id", stu.getId());
+        criteria.andEqualTo("age", stu.getAge());
+//        studentMapper.updateByExample(stu, example);//更新全部，为null，也会覆盖更新
+        studentMapper.updateByExampleSelective(stu, example);//有选择的更新，即为null的数据不更新
 
+
+    }
+
+    //通过主键来删除，因为主键唯一，所以只会删除一条数据
+    @Override
+    public void deleteStudentById(String id) {
+        studentMapper.deleteByPrimaryKey(id);
+    }
+
+    //自定义删除条件，删除所有匹配的数据
+    @Override
+    public void deleteByExample(Student stu) {
+        //自定义删除条件
+        Example example = new Example(Student.class);
+        Example.Criteria criteria = example.createCriteria();
+//        criteria.andEqualTo("age", stu.getAge());
+        criteria.andCondition("age<"+stu.getAge());
+        studentMapper.deleteByExample(example);//自定义删除条件
+    }
+
+    //根据对象中属性值匹配做条件删除，会删除所有匹配的数据
+    @Override
+    public void deleteByStudent(Student stu) {
         //根据对象中属性值匹配做条件删除
         studentMapper.delete(stu);//根据对象中属性值匹配做条件删除
-//        studentMapper.deleteByPrimaryKey(stu.getUserid());//通过主键来删除
     }
 }

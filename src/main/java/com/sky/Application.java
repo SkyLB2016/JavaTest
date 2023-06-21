@@ -10,7 +10,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  * 扫描完成之后，会放入到 spring/springboot 的容器中
  */
 @SpringBootApplication // 启动注解
-@MapperScan(basePackages = "com.sky.mapper")//mappers 引入
+@MapperScan(basePackages = "com.sky.mapper")//映射迁移进来的 mapper 文件，需要在application中引入
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

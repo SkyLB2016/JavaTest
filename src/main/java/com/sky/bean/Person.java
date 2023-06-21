@@ -1,39 +1,86 @@
 package com.sky.bean;
 
-import com.sun.org.apache.bcel.internal.util.ClassPath;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
+import javax.persistence.Id;
 
-@Component
-@ConfigurationProperties(prefix = "user")
-@PropertySource(value= "classpath:MyConfig.properties",encoding = "utf-8")
 public class Person {
-    private String name;
-    private Integer age;
-    private String gender;
+    @Id
+    private String id;
 
+    private String name;
+
+    private Integer age;
+
+    private Integer gender;
+
+    private String address;
+
+    /**
+     * @return id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * @param id
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    /**
+     * @return name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * @return age
+     */
     public Integer getAge() {
         return age;
     }
 
+    /**
+     * @param age
+     */
     public void setAge(Integer age) {
         this.age = age;
     }
 
-    public String getGender() {
+    /**
+     * @return gender
+     */
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    /**
+     * @param gender
+     */
+    public void setGender(Integer gender) {
         this.gender = gender;
+    }
+
+    /**
+     * @return address
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * @param address
+     */
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

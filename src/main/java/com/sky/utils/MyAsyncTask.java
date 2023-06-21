@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 @Component          //1.标记配置类，让springboot容器可以扫描到
-@EnableAsync       //2.开启定时任务
+@EnableAsync       //2.开启异步任务
 @Slf4j
 public class MyAsyncTask {
 

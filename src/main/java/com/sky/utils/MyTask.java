@@ -7,15 +7,17 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.LocalDateTime;
 
-//@Configuration          //1.标记配置类，让springboot容器可以扫描到
-//@EnableScheduling       //2.开启定时任务
+@Configuration          //1.标记配置类，让springboot容器可以扫描到
+@EnableScheduling       //2.开启定时任务
 @Slf4j
 public class MyTask {
+    public int count = 0;
 
-//    @Scheduled(cron = "*/5 * * * * ?")
-    @Scheduled(cron = "0 */1 * * * ?")
-    public void publicMsg(){
-        log.warn("开始执行定时任务："+ LocalDateTime.now());
+    //    @Scheduled(cron = "*/5 * * * * ?")
+//    @Scheduled(cron = "0 */1 * * * ?")//添加一个任务，并且注明任务的运行方式
+    @Scheduled(cron = "0 0 23 * * ?")
+    public void publicMsg() {
+        log.warn("开始执行定时任务,第" + (++count) + "次：" + LocalDateTime.now());
     }
     // Cron表达式范例：
     // */5 * * * * ?：每隔5秒执行一次

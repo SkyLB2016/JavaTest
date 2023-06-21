@@ -26,17 +26,17 @@ public class UserInfoInterceptor implements HandlerInterceptor {
         String userId = request.getHeader("userId");
         String token = request.getHeader("token");
 
-//        if (!StringUtils.hasLength(userId) || !StringUtils.hasLength(token)) {
-//            log.error("用户信息校验不通过，信息不完整");
-//            GraceException.display("用户信息校验不通过，信息不完整");
-//            return false;
-//        }
-//
-//        if (!userId.equalsIgnoreCase("1001") || !token.equalsIgnoreCase("1qaz2wsx")) {
-//            log.error("用户权限不通过");
-//            GraceException.display("用户权限不通过");
-//            return false;
-//        }
+        if (!StringUtils.hasLength(userId) || !StringUtils.hasLength(token)) {
+            log.error("用户信息校验不通过，信息不完整");
+            GraceException.display("用户信息校验不通过，信息不完整");
+            return false;
+        }
+
+        if (!userId.equalsIgnoreCase("1001") || !token.equalsIgnoreCase("1qaz2wsx")) {
+            log.error("用户权限不通过");
+            GraceException.display("用户权限不通过");
+            return false;
+        }
 
         return true;
     }

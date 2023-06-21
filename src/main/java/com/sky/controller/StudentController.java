@@ -24,6 +24,7 @@ import java.util.UUID;
 @Slf4j
 public class StudentController {
 
+    //依赖注入
     @Autowired
     private StudentService studentService;
 
@@ -35,55 +36,55 @@ public class StudentController {
      */
     @PostMapping("add")
     public JSONResult addStudent(@RequestBody Map<String, Object> map) {
-        String userid = UUID.randomUUID().toString();
+        String id = UUID.randomUUID().toString();
         Student student = new Student();
-        student.setUserid(userid);
+        student.setId(id);
         student.setName((String) map.get("name"));
         student.setAge((Integer) map.get("age"));
+        student.setGender((Integer) map.get("gender"));
+        student.setAddress((String) map.get("address"));
         student.setScore((String) map.get("score"));
         studentService.insertStudent(student);
-        return JSONResult.ok();
+        return JSONResult.ok("以 @RequestBody 形式，通过 map 格式接收数据");
     }
 
     /**
      * 通过对象获取参数
      *
-     * @param param 上传的json数据，转成对象
-     * @return
+     * @param param  上传的json数据，转成对象
+     *               注解 @Valid ，是开启 hibernate 校验
+     * @param result 注解校验的错误信息集合，不写这个参数的话，会默认抛出 MethodArgumentNotValidException 错误，可以在统一异常信息中拦截处理
      */
     @PostMapping("create")
-    public JSONResult createStudent(@RequestBody StudentParam param) {
+    public JSONResult createStudent(@Valid @RequestBody StudentParam param, BindingResult result) {
+        if (result.hasErrors()) {
+            Map<String, String> map = getErrors(result);
+            return JSONResult.errorMap(map);
+        }
         String userid = UUID.randomUUID().toString();
         Student stu = new Student();
         BeanUtils.copyProperties(param, stu);
-        log.warn(stu.getUserid());
-        stu.setUserid(userid);
+        stu.setId(userid);//为学生ID赋值了
         studentService.insertStudent(stu);
-        return JSONResult.ok();
+        return JSONResult.ok("以 @RequestBody 形式，通过 param 类的形式接收数据；注解 @Valid ，是开启 hibernate 校验；result 注解校验的错误信息集合，不写这个参数的话，会默认抛出 MethodArgumentNotValidException 错误，可以在统一异常信息中拦截处理");
     }
 
     /**
-     * 把参数写在？之前，请求数据
-     *
-     * @param userid
-     * @return
+     * 通过 @PathVariable 注解获取参数，需要把参数写在？之前
      */
-    @GetMapping("getPath/{userid}")
-    public JSONResult getPathStudent(@PathVariable("userid") String userid) {
+    @GetMapping("get/{id}")
+    public JSONResult getPathStudent(@PathVariable("id") String userid) {
         Student stu = studentService.queryById(userid);
         return JSONResult.ok(stu);
     }
 
     /**
-     * 把参数写在？之后，请求数据
-     *
-     * @param userid
-     * @return
+     * 通过 @RequestParam 获取参数，需要把参数写在？之后，同时@RequestParam 可以省略
      */
-    @GetMapping("getParam")
-//    public JSONResult getparamStudent(@RequestParam("userid") String userid) {//requestParam可省略
-    public JSONResult getParamStudent(String userid) {
-        Student stu = studentService.queryById(userid);
+    @GetMapping("get")
+//    public JSONResult getparamStudent(@RequestParam("id") String id) {//RequestParam可省略
+    public JSONResult getParamStudent(String id) {
+        Student stu = studentService.queryById(id);
         return JSONResult.ok(stu);
     }
 
@@ -121,6 +122,19 @@ public class StudentController {
         return JSONResult.ok(list);
     }
 
+    @PutMapping("updateStudentByKey")
+    public JSONResult updateStudentByKey(@Valid @RequestBody StudentParam param,
+                                         BindingResult result) {
+        if (result.hasErrors()) {
+            Map<String, String> map = getErrors(result);
+            return JSONResult.errorMap(map);
+        }
+        Student stu = new Student();
+        BeanUtils.copyProperties(param, stu);
+        studentService.updateStudentByKey(stu);
+        return JSONResult.ok();
+    }
+
     @PutMapping("update")
     public JSONResult updateStudent(@Valid @RequestBody StudentParam param,
                                     BindingResult result) {
@@ -134,13 +148,27 @@ public class StudentController {
         return JSONResult.ok();
     }
 
-    @DeleteMapping("delete")
-    public JSONResult deleteStudent(@Valid @RequestBody StudentParam param,
-                                    BindingResult result) {
+    @DeleteMapping("deleteStudentById")
+    public JSONResult deleteStudentById(@RequestParam String id) {
+        studentService.deleteStudentById(id);
+        return JSONResult.ok();
+    }
+
+    @DeleteMapping("deleteByExample")
+    public JSONResult deleteByExample(@Valid @RequestBody StudentParam param,
+                                      BindingResult result) {
         if (result.hasErrors()) {
             Map<String, String> map = getErrors(result);
             return JSONResult.errorMap(map);
         }
+        Student stu = new Student();
+        BeanUtils.copyProperties(param, stu);
+        studentService.deleteByExample(stu);
+        return JSONResult.ok();
+    }
+
+    @DeleteMapping("delete")
+    public JSONResult deleteStudent(@RequestBody StudentParam param) {
         Student stu = new Student();
         BeanUtils.copyProperties(param, stu);
         studentService.deleteByStudent(stu);
@@ -149,13 +177,24 @@ public class StudentController {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @PostMapping("testTrans")
-    public JSONResult testTrans(@Valid @RequestBody StudentParam param) {
+    public JSONResult testTrans(@Valid @RequestBody StudentParam param, BindingResult result) {
 
+        if (result.hasErrors()) {
+            Map<String, String> map = getErrors(result);
+            return JSONResult.errorMap(map);
+        }
+        String userid = UUID.randomUUID().toString();
         Student stu = new Student();
         BeanUtils.copyProperties(param, stu);
+        stu.setId(userid);//为学生ID赋值了
         studentService.insertStudent(stu);
-
         int a = 9 / 0;
+        //错误信息不能try catch 拦截，拦截后就不回滚了了。
+//        try {
+//            int a = 9 / 0;
+//        } catch (ArithmeticException e) {
+//            return JSONResult.errorMsg("执行失败，事务注解：把一段代码同合成一个整体，中途发生错误，这段代码已经执行过的操作，会被回滚。");
+//        }
         return JSONResult.ok(studentService.queryByObject(stu));
     }
 
@@ -163,8 +202,8 @@ public class StudentController {
         Map<String, String> map = new HashMap<>();
         List<FieldError> errors = result.getFieldErrors();
         for (FieldError error : errors) {
-            String field = error.getField();
-            String msg = error.getDefaultMessage();
+            String field = error.getField();//错误的字段名
+            String msg = error.getDefaultMessage();//错误信息。
             map.put(field, msg);
         }
         return map;
